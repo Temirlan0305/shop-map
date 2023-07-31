@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ShopMap from '../components/ShopMap';
 import TodoList from '../components/TodoList';
 
@@ -6,13 +6,12 @@ const KEY = "todoList";
 const HomePage = () => {
    const [selectedShop, setSelectedShop] = useState(null);
    const [todoLists, setTodoLists] = useState({});
-
+   const localRef = useRef(false)
    useEffect(() => {
       const storedTodoLists = localStorage.getItem(KEY);
       if (storedTodoLists) {
          setTodoLists(JSON.parse(storedTodoLists));
-      } else {
-         localStorage.setItem(KEY, JSON.stringify(todoLists));
+         localStorage.setItem(KEY, storedTodoLists)
       }
    }, []);
    const onShop = (obj) => {
@@ -23,9 +22,18 @@ const HomePage = () => {
          ...prevTodoLists,
          [`${shopId}`]: todoList,
       }));
-      localStorage.setItem(KEY, JSON.stringify({
-         [`${shopId}`]: todoList,
-      }));
+      const storedTodoLists = localStorage.getItem(KEY);
+      if (storedTodoLists) {
+         let json = JSON.parse(storedTodoLists);
+         localStorage.setItem(KEY, JSON.stringify({
+            ...json,
+            [`${shopId}`]: todoList,
+         }));
+      } else {
+         localStorage.setItem(KEY, JSON.stringify({
+            [`${shopId}`]: todoList,
+         }));
+      }
    };
 
 
