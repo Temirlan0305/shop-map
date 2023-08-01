@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import ShopMap from '../components/ShopMap';
 import TodoList from '../components/TodoList';
+import ArcgisMap from '../components/ArcgisMap';
 
 const KEY = "todoList";
 const HomePage = () => {
@@ -39,7 +40,8 @@ const HomePage = () => {
 
    return (
       <div className="homepage">
-         <ShopMap setSelectedShop={onShop} />
+         <ArcgisMap setSelectedShop={onShop} />
+         {/* <ShopMap setSelectedShop={onShop} /> */}
          <TodoList selectedShop={selectedShop}
             todoList={todoLists[selectedShop?.id] || []}
             updateTodoList={updateTodoList} />

@@ -13,7 +13,7 @@ const TodoList = ({ selectedShop, todoList, updateTodoList }) => {
    };
 
    const removeItem = (item) => {
-      const newTodoList = todoList.filter((obj) => obj != item);
+      const newTodoList = todoList.filter((obj) => obj !== item);
       updateTodoList(selectedShop.id, newTodoList);
    }
 
